@@ -62,11 +62,19 @@ class WP_JSON_Response implements WP_JSON_ResponseInterface {
 	 */
 	public function link_header( $rel, $link, $other = array() ) {
 		$header = '<' . $link . '>; rel="' . $rel . '"';
-		foreach ( $other as $key => $value ) {
-			if ( 'title' == $key )
-				$value = '"' . $value . '"';
-			$header .= '; ' . $key . '=' . $value;
-		}
+
+    //
+    // For large result sets, this causes gateway errors in nginx.
+    // We don't use them or need them, so not outputting.
+    //
+    /*
+
+    		foreach ( $other as $key => $value ) {
+    			if ( 'title' == $key )
+    				$value = '"' . $value . '"';
+    			$header .= '; ' . $key . '=' . $value;
+    		}
+    */
 		return $this->header( 'Link', $header, false );
 	}
 
